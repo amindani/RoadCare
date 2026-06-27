@@ -15,8 +15,8 @@ UPLOAD_FOLDER = "static/uploads"
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Membuat folder upload otomatis
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Membuat folder upload otomatis (DIMATIKAN KARENA VERCEL READ-ONLY)
+# os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # =========================
 # DATABASE
