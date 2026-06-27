@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Upload Laporan - RoadCare</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        html,
+        body{
+
+            width:100%;
+            min-height:100vh;
+
+            overflow-x:hidden;
+            overflow-y:auto;
+
+            color:white;
+        }
+
+        body{
+
+            display:flex;
+            flex-direction:column;
+        }
+
+        /* =========================
+           VIDEO BACKGROUND
+        ========================= */
+
+        #bg-video{
+
+            position:fixed;
+
+            right:0;
+            bottom:0;
+
+            min-width:100%;
+            min-height:100%;
+
+            object-fit:cover;
+
+            z-index:-2;
+        }
+
+        .overlay{
+
+            position:fixed;
+
+            width:100%;
+            height:100%;
+
+            background:rgba(0,0,0,0.45);
+
+            z-index:-1;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar{
+
+            width:100%;
+
+            padding:20px 40px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            background:rgba(0,0,0,0.25);
+
+            backdrop-filter:blur(10px);
+        }
+
+        .navbar h1{
+
+            color:#00aaff;
+        }
+
+        .navbar a{
+
+            text-decoration:none;
+
+            color:white;
+
+            padding:12px 18px;
+
+            border-radius:10px;
+
+            background:rgba(255,255,255,0.15);
+
+            transition:0.3s;
+        }
+
+        .navbar a:hover{
+
+            background:rgba(255,255,255,0.25);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container{
+
+            width:100%;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:flex-start;
+
+            padding:40px;
+        }
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .form-card{
+
+            width:700px;
+
+            background:rgba(255,255,255,0.12);
+
+            backdrop-filter:blur(12px);
+
+            border-radius:25px;
+
+            padding:35px;
+
+            box-shadow:0 8px 25px rgba(0,0,0,0.3);
+
+            margin-bottom:40px;
+        }
+
+        .form-card h2{
+
+            text-align:center;
+
+            margin-bottom:10px;
+
+            color:#00aaff;
+        }
+
+        .form-card p{
+
+            text-align:center;
+
+            color:#ddd;
+
+            margin-bottom:30px;
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        .input-group{
+
+            margin-top:18px;
+        }
+
+        .input-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            font-weight:bold;
+        }
+
+        .input-group input,
+        .input-group textarea{
+
+            width:100%;
+
+            padding:14px;
+
+            border:none;
+
+            border-radius:12px;
+
+            outline:none;
+
+            background:rgba(255,255,255,0.18);
+
+            color:white;
+
+            font-size:15px;
+        }
+
+        .input-group textarea{
+
+            resize:none;
+
+            height:120px;
+        }
+
+        .input-group input::placeholder,
+        .input-group textarea::placeholder{
+
+            color:#ddd;
+        }
+
+        /* =========================
+           FILE INPUT
+        ========================= */
+
+        .file-box{
+
+            margin-top:20px;
+        }
+
+        .file-box input{
+
+            width:100%;
+
+            padding:12px;
+
+            border-radius:10px;
+
+            background:rgba(255,255,255,0.15);
+
+            color:white;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .submit-btn{
+
+            width:100%;
+
+            margin-top:30px;
+
+            padding:15px;
+
+            border:none;
+
+            border-radius:15px;
+
+            background:#00aaff;
+
+            color:white;
+
+            font-size:16px;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .submit-btn:hover{
+
+            background:#0088cc;
+
+            transform:translateY(-2px);
+        }
+
+        /* =========================
+           INFO BOX
+        ========================= */
+
+        .info-box{
+
+            background:rgba(255,255,255,0.12);
+
+            padding:20px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            line-height:1.8;
+        }
+
+        .info-box h3{
+
+            margin-bottom:10px;
+
+            color:#00aaff;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:800px){
+
+            .form-card{
+
+                width:100%;
+            }
+
+            .navbar{
+
+                flex-direction:column;
+
+                gap:15px;
+            }
+
+            .container{
+
+                padding:20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         VIDEO BACKGROUND
+    ========================= -->
+
+    <video autoplay muted loop id="bg-video">
+
+        <source
+            src="{{ url_for('static', filename='videos/bg.mp4') }}"
+            type="video/mp4"
+        >
+
+    </video>
+
+    <div class="overlay"></div>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <div class="navbar">
+
+        <h1>RoadCare</h1>
+
+        <a href="/dashboard">
+            ← Kembali ke Dashboard
+        </a>
+
+    </div>
+
+    <!-- =========================
+         CONTAINER
+    ========================= -->
+
+    <div class="container">
+
+        <div class="form-card">
+
+            <h2>
+                Upload Laporan Jalan Rusak
+            </h2>
+
+            <p>
+                Bantu pemerintah melaporkan kondisi jalan
+                rusak dengan informasi yang lengkap dan akurat.
+            </p>
+
+            <!-- INFO -->
+
+            <div class="info-box">
+
+                <h3>Petunjuk Pengisian</h3>
+
+                <ul>
+
+                    <li>
+                        Isi nama jalan dengan jelas
+                    </li>
+
+                    <li>
+                        Tambahkan alamat lengkap
+                    </li>
+
+                    <li>
+                        Masukkan koordinat Google Maps
+                    </li>
+
+                    <li>
+                        Tambahkan patokan lokasi
+                    </li>
+
+                    <li>
+                        Upload foto kondisi jalan
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- FORM -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <div class="input-group">
+
+                    <label>
+                        Nama Jalan
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nama_jalan"
+                        placeholder="Contoh: Jl. Cipto Mangunkusumo"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Deskripsi Kerusakan
+                    </label>
+
+                    <textarea
+                        name="deskripsi"
+                        placeholder="Jelaskan kondisi jalan rusak..."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Alamat Lengkap
+                    </label>
+
+                    <textarea
+                        name="alamat"
+                        placeholder="RT/RW, Kelurahan, Kecamatan, Kota"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Koordinat Google Maps
+                    </label>
+
+                    <input
+                        type="text"
+                        name="koordinat"
+                        placeholder="-6.7372, 108.5523"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        Patokan Lokasi
+                    </label>
+
+                    <input
+                        type="text"
+                        name="patokan"
+                        placeholder="Contoh: depan minimarket"
+                        required
+                    >
+
+                </div>
+
+                <div class="file-box">
+
+                    <label>
+                        Upload Foto Jalan
+                    </label>
+
+                    <input
+                        type="file"
+                        name="foto"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    🚀 Kirim Laporan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
